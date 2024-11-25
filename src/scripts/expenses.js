@@ -20,8 +20,19 @@ function saveCategories() {
 
 // Function to render all categories
 function renderCategories() {
-  categoriesContainer.innerHTML = "";
-  categories.forEach((category) => {
+  categoriesContainer.innerHTML = ""; // Clear existing cards
+
+  // Sort categories to maintain consistent order
+  const sortedCategories = [...categories].sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
+
+  sortedCategories.forEach((category) => {
+    // Ensure transactions are sorted by date
+    if (category.transactions) {
+      category.transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+
     const categoryCard = document.createElement("category-card");
     categoryCard.category = category;
     categoriesContainer.appendChild(categoryCard);
@@ -32,10 +43,21 @@ function renderCategories() {
 document.addEventListener("transactionadded", (e) => {
   const { categoryName, transaction } = e.detail;
   const category = categories.find((c) => c.name === categoryName);
+
   if (category) {
-    if (!category.transactions) category.transactions = [];
-    category.transactions.push(transaction);
-    saveCategories();
+    if (!category.transactions) {
+      category.transactions = [];
+    }
+
+    // Check if transaction with this ID already exists
+    const existingTransaction = category.transactions.find(
+      (t) => t.id === transaction.id,
+    );
+
+    if (!existingTransaction) {
+      category.transactions.push(transaction);
+      saveCategories();
+    }
   }
 });
 

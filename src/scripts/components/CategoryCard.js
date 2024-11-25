@@ -88,6 +88,8 @@ class CategoryCard extends HTMLElement {
         form.querySelector('[name="transactionAmount"]').value,
       ),
       date: form.querySelector('[name="transactionDate"]').value,
+      // Add a unique identifier
+      id: Date.now().toString(),
     };
 
     // Validate input
@@ -100,13 +102,12 @@ class CategoryCard extends HTMLElement {
       return;
     }
 
+    // Initialize transactions array if it doesn't exist
     if (!this._category.transactions) {
       this._category.transactions = [];
     }
 
-    this._category.transactions.push(newTransaction);
-
-    // Dispatch event for parent to handle storage
+    // Only dispatch the event - don't modify local data
     this.dispatchEvent(
       new CustomEvent("transactionadded", {
         bubbles: true,
