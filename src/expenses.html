@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./styles/reset.css" />
     <link rel="stylesheet" href="./styles/output.css" />
   </head>
-  <body class="bg-zinc-950 text-white ml-auto mr-auto px-64 font-sans">
+  <body class="bg-zinc-950 text-white ml-auto mr-auto px-32 font-sans">
     <!-- Components -->
     <!-- Category Card -->
     <template id="category-card-template">
@@ -33,7 +33,7 @@
             <p>11/25/2024</p>
           </div>
         </div>
-        <form action="POST" class="mt-8 flex gap-2">
+        <form action="POST" class="mt-4 flex justify-center gap-2">
           <input
             type="text"
             name="transactionName"
@@ -53,7 +53,7 @@
             name="transactionDate"
             id="transactionDate"
             placeholder="Date"
-            class="bg-zinc-900 text-white w-full rounded p-2"
+            class="bg-zinc-900 text-white rounded p-2"
           />
           <button
             class="bg-green-700 hover:bg-green-800 flex gap-2 rounded p-2 px-4 transition-colors"
@@ -63,27 +63,8 @@
         </form>
       </div>
     </template>
-    <header>
-      <nav class="flex items-center gap-12 py-4">
-        <h1 class="text-green-400 text-4xl font-bold">MoneyTrack</h1>
-        <a href="./index.html" class="transition-all hover:underline"
-          >Dashboard
-        </a>
-        <a href="./expenses.html" class="hover:underline">Expenses</a>
-      </nav>
-    </header>
-    <main class="mt-4">
-      <button
-        id="add-category-btn"
-        class="bg-green-700 hover:bg-green-800 flex gap-2 rounded p-2 px-4 transition-colors"
-      >
-        <img src="assets/add.svg" alt="" />
-        Add Category
-      </button>
-      <section class="mt-8 grid grid-cols-3">
-        <!-- Category Cards render here -->
-      </section>
-    </main>
+
+    <!-- Add Category Dialog -->
     <dialog
       id="add-category-dialog"
       class="bg-zinc-900 text-white animate-dialog rounded-lg p-8"
@@ -127,6 +108,28 @@
         </button>
       </form>
     </dialog>
+
+    <header>
+      <nav class="flex items-center gap-12 py-4">
+        <h1 class="text-green-400 text-4xl font-bold">MoneyTrack</h1>
+        <a href="./index.html" class="transition-all hover:underline"
+          >Dashboard
+        </a>
+        <a href="./expenses.html" class="hover:underline">Expenses</a>
+      </nav>
+    </header>
+    <main class="mt-4">
+      <button
+        id="add-category-btn"
+        class="bg-green-700 hover:bg-green-800 flex gap-2 rounded p-2 px-4 transition-colors"
+      >
+        <img src="assets/add.svg" alt="" />
+        Add Category
+      </button>
+      <section id="categories-container" class="mt-8 grid grid-cols-3 gap-4">
+        <!-- Category cards will be rendered here by JavaScript -->
+      </section>
+    </main>
     <script type="module" src="./scripts/expenses.js"></script>
   </body>
 </html>
