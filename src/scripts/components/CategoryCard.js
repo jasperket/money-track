@@ -53,15 +53,80 @@ class CategoryCard extends HTMLElement {
   createTransactionElement(transaction) {
     const div = document.createElement("div");
     div.className =
-      "bg-zinc-900 grid grid-cols-3 rounded p-2 text-center opacity-0 animate-transaction";
+      "bg-zinc-900 grid grid-cols-4 rounded p-2 text-center opacity-0 animate-transaction";
+    div.dataset.transactionId = transaction.id;
 
     div.innerHTML = `
       <p>${transaction.name}</p>
       <p class="border-green-400 border-x">${formatCurrency(transaction.amount)}</p>
       <p>${new Date(transaction.date).toLocaleDateString()}</p>
+      <div class="flex justify-center items-center">
+        <img src="assets/delete.svg" alt="Delete transaction" class="cursor-pointer w-5 h-5 delete-transaction hover:bg-red-950 rounded-full p-1 transition-colors"/>
+      </div>
     `;
 
+    // Add delete event listener
+    const deleteButton = div.querySelector(".delete-transaction");
+    deleteButton.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.handleDeleteTransaction(transaction.id);
+    });
+
     return div;
+  }
+
+  handleDeleteTransaction(transactionId) {
+    const confirmDialog = document.getElementById("confirm-dialog");
+    const confirmMessage = document.getElementById("confirm-message");
+    const confirmDelete = document.getElementById("confirm-delete");
+    const confirmCancel = document.getElementById("confirm-cancel");
+    const confirmClose = document.getElementById("confirm-dialog-close");
+
+    confirmMessage.textContent =
+      "Are you sure you want to delete this transaction?";
+
+    const closeDialog = () => {
+      confirmDialog.close();
+      confirmDelete.removeEventListener("click", handleConfirm);
+      confirmCancel.removeEventListener("click", handleCancel);
+      confirmClose.removeEventListener("click", handleCancel);
+    };
+
+    const handleConfirm = () => {
+      // Dispatch custom event for transaction deletion
+      this.dispatchEvent(
+        new CustomEvent("transactiondelete", {
+          bubbles: true,
+          detail: {
+            categoryName: this._category.name,
+            transactionId: transactionId,
+          },
+        }),
+      );
+
+      // Find and remove the transaction element with animation
+      const transactionElement = this.querySelector(
+        `[data-transaction-id="${transactionId}"]`,
+      );
+      if (transactionElement) {
+        transactionElement.style.animation = "fadeOut 0.3s ease-out forwards";
+        transactionElement.addEventListener("animationend", () => {
+          transactionElement.remove();
+        });
+      }
+
+      closeDialog();
+    };
+
+    const handleCancel = () => {
+      closeDialog();
+    };
+
+    confirmDelete.addEventListener("click", handleConfirm);
+    confirmCancel.addEventListener("click", handleCancel);
+    confirmClose.addEventListener("click", handleCancel);
+
+    confirmDialog.showModal();
   }
 
   setupEventListeners() {
@@ -139,7 +204,23 @@ class CategoryCard extends HTMLElement {
   }
 
   handleDeleteCategory() {
-    if (confirm("Are you sure you want to delete this category?")) {
+    const confirmDialog = document.getElementById("confirm-dialog");
+    const confirmMessage = document.getElementById("confirm-message");
+    const confirmDelete = document.getElementById("confirm-delete");
+    const confirmCancel = document.getElementById("confirm-cancel");
+    const confirmClose = document.getElementById("confirm-dialog-close");
+
+    confirmMessage.textContent =
+      "Are you sure you want to delete this category and all its transactions?";
+
+    const closeDialog = () => {
+      confirmDialog.close();
+      confirmDelete.removeEventListener("click", handleConfirm);
+      confirmCancel.removeEventListener("click", handleCancel);
+      confirmClose.removeEventListener("click", handleCancel);
+    };
+
+    const handleConfirm = () => {
       this.dispatchEvent(
         new CustomEvent("categorydelete", {
           bubbles: true,
@@ -148,7 +229,18 @@ class CategoryCard extends HTMLElement {
           },
         }),
       );
-    }
+      closeDialog();
+    };
+
+    const handleCancel = () => {
+      closeDialog();
+    };
+
+    confirmDelete.addEventListener("click", handleConfirm);
+    confirmCancel.addEventListener("click", handleCancel);
+    confirmClose.addEventListener("click", handleCancel);
+
+    confirmDialog.showModal();
   }
 
   render() {

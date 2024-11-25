@@ -1,7 +1,7 @@
 // src/scripts/expenses.js
 
 import { Category } from "./classes/Category.js";
-import "./components/CategoryCard.js"; // Make sure the path is correct
+import "./components/CategoryCard.js";
 
 // Get DOM elements
 const openDialogBtn = document.getElementById("add-category-btn");
@@ -56,6 +56,23 @@ document.addEventListener("transactionadded", (e) => {
 
     if (!existingTransaction) {
       category.transactions.push(transaction);
+      saveCategories();
+    }
+  }
+});
+
+// Add transaction deletion event handler
+document.addEventListener("transactiondelete", (e) => {
+  const { categoryName, transactionId } = e.detail;
+  const category = categories.find((c) => c.name === categoryName);
+
+  if (category && category.transactions) {
+    const transactionIndex = category.transactions.findIndex(
+      (t) => t.id === transactionId,
+    );
+
+    if (transactionIndex > -1) {
+      category.transactions.splice(transactionIndex, 1);
       saveCategories();
     }
   }

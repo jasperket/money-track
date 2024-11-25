@@ -69,3 +69,18 @@ dialog[open] {
 .delete:hover {
   background-image: url("../assets/delete_fill.svg");
 }
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+.delete-transaction:hover {
+  background-color: rgb(127, 29, 29);
+}
