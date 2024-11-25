@@ -36,7 +36,6 @@ class CategoryCard extends HTMLElement {
 
     // Render existing transactions
     const transactionsContainer = clone.querySelector(".mt-4");
-    transactionsContainer.innerHTML = ""; // Clear template transaction
 
     if (this._category?.transactions?.length) {
       this._category.transactions.forEach((transaction, index) => {
@@ -51,28 +50,28 @@ class CategoryCard extends HTMLElement {
   }
 
   createTransactionElement(transaction) {
-    const div = document.createElement("div");
-    div.className =
-      "bg-zinc-900 grid grid-cols-4 rounded p-2 text-center opacity-0 animate-transaction";
-    div.dataset.transactionId = transaction.id;
+    const template = document.getElementById("transaction-template");
+    const clone = template.content.cloneNode(true);
+    const transactionDiv = clone.querySelector("div");
 
-    div.innerHTML = `
-      <p>${transaction.name}</p>
-      <p class="border-green-400 border-x">${formatCurrency(transaction.amount)}</p>
-      <p>${new Date(transaction.date).toLocaleDateString()}</p>
-      <div class="flex justify-center items-center">
-        <img src="assets/delete.svg" alt="Delete transaction" class="cursor-pointer w-5 h-5 delete-transaction hover:bg-red-950 rounded-full p-1 transition-colors"/>
-      </div>
-    `;
+    // Set transaction data
+    transactionDiv.dataset.transactionId = transaction.id;
+    clone.querySelector(".transaction-name").textContent = transaction.name;
+    clone.querySelector(".transaction-amount").textContent = formatCurrency(
+      transaction.amount,
+    );
+    clone.querySelector(".transaction-date").textContent = new Date(
+      transaction.date,
+    ).toLocaleDateString();
 
     // Add delete event listener
-    const deleteButton = div.querySelector(".delete-transaction");
+    const deleteButton = clone.querySelector(".delete-transaction");
     deleteButton.addEventListener("click", (e) => {
       e.stopPropagation();
       this.handleDeleteTransaction(transaction.id);
     });
 
-    return div;
+    return transactionDiv;
   }
 
   handleDeleteTransaction(transactionId) {
@@ -93,7 +92,6 @@ class CategoryCard extends HTMLElement {
     };
 
     const handleConfirm = () => {
-      // Dispatch custom event for transaction deletion
       this.dispatchEvent(
         new CustomEvent("transactiondelete", {
           bubbles: true,
@@ -104,7 +102,6 @@ class CategoryCard extends HTMLElement {
         }),
       );
 
-      // Find and remove the transaction element with animation
       const transactionElement = this.querySelector(
         `[data-transaction-id="${transactionId}"]`,
       );
@@ -115,6 +112,46 @@ class CategoryCard extends HTMLElement {
         });
       }
 
+      closeDialog();
+    };
+
+    const handleCancel = () => {
+      closeDialog();
+    };
+
+    confirmDelete.addEventListener("click", handleConfirm);
+    confirmCancel.addEventListener("click", handleCancel);
+    confirmClose.addEventListener("click", handleCancel);
+
+    confirmDialog.showModal();
+  }
+
+  handleDeleteCategory() {
+    const confirmDialog = document.getElementById("confirm-dialog");
+    const confirmMessage = document.getElementById("confirm-message");
+    const confirmDelete = document.getElementById("confirm-delete");
+    const confirmCancel = document.getElementById("confirm-cancel");
+    const confirmClose = document.getElementById("confirm-dialog-close");
+
+    confirmMessage.textContent =
+      "Are you sure you want to delete this category and all its transactions?";
+
+    const closeDialog = () => {
+      confirmDialog.close();
+      confirmDelete.removeEventListener("click", handleConfirm);
+      confirmCancel.removeEventListener("click", handleCancel);
+      confirmClose.removeEventListener("click", handleCancel);
+    };
+
+    const handleConfirm = () => {
+      this.dispatchEvent(
+        new CustomEvent("categorydelete", {
+          bubbles: true,
+          detail: {
+            categoryName: this._category.name,
+          },
+        }),
+      );
       closeDialog();
     };
 
@@ -201,46 +238,6 @@ class CategoryCard extends HTMLElement {
     );
 
     form.reset();
-  }
-
-  handleDeleteCategory() {
-    const confirmDialog = document.getElementById("confirm-dialog");
-    const confirmMessage = document.getElementById("confirm-message");
-    const confirmDelete = document.getElementById("confirm-delete");
-    const confirmCancel = document.getElementById("confirm-cancel");
-    const confirmClose = document.getElementById("confirm-dialog-close");
-
-    confirmMessage.textContent =
-      "Are you sure you want to delete this category and all its transactions?";
-
-    const closeDialog = () => {
-      confirmDialog.close();
-      confirmDelete.removeEventListener("click", handleConfirm);
-      confirmCancel.removeEventListener("click", handleCancel);
-      confirmClose.removeEventListener("click", handleCancel);
-    };
-
-    const handleConfirm = () => {
-      this.dispatchEvent(
-        new CustomEvent("categorydelete", {
-          bubbles: true,
-          detail: {
-            categoryName: this._category.name,
-          },
-        }),
-      );
-      closeDialog();
-    };
-
-    const handleCancel = () => {
-      closeDialog();
-    };
-
-    confirmDelete.addEventListener("click", handleConfirm);
-    confirmCancel.addEventListener("click", handleCancel);
-    confirmClose.addEventListener("click", handleCancel);
-
-    confirmDialog.showModal();
   }
 
   render() {

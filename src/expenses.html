@@ -15,7 +15,25 @@
   </head>
   <body class="bg-zinc-950 text-white ml-auto mr-auto px-32 font-sans">
     <!-- Components -->
-    <!-- Category Card -->
+    <!-- Transaction Item Template -->
+    <template id="transaction-template">
+      <div
+        class="bg-zinc-900 animate-transaction grid grid-cols-4 items-center rounded p-2 text-center opacity-0"
+      >
+        <p class="transaction-name">Bus</p>
+        <p class="transaction-amount border-green-400 border-x">₱50.00</p>
+        <p class="transaction-date">11/25/2024</p>
+        <div class="flex items-center justify-center">
+          <img
+            src="assets/delete.svg"
+            alt="Delete transaction"
+            class="delete-transaction hover:bg-red-950 cursor-pointer rounded-full p-1.5 transition-colors"
+          />
+        </div>
+      </div>
+    </template>
+
+    <!-- Category Card Template -->
     <template id="category-card-template">
       <div class="border-green-400 rounded-xl border p-6">
         <div class="flex items-center gap-2">
@@ -26,19 +44,7 @@
           <p class="ml-auto">Expenses</p>
         </div>
         <div class="mt-4 flex flex-col gap-2">
-          <!-- Transactions -->
-          <div class="bg-zinc-900 grid grid-cols-4 rounded p-2 text-center">
-            <p>Bus</p>
-            <p class="border-green-400 border-x">₱50.00</p>
-            <p>11/25/2024</p>
-            <div class="flex items-center justify-center">
-              <img
-                src="assets/delete.svg"
-                alt="Delete transaction"
-                class="delete-transaction hover:bg-red-950 h-5 w-5 cursor-pointer rounded-full p-1 transition-colors"
-              />
-            </div>
-          </div>
+          <!-- Transactions will be rendered here -->
         </div>
         <form action="POST" class="mt-4 flex justify-center gap-2">
           <input
