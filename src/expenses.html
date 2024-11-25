@@ -26,21 +26,43 @@
     <main class="mt-4">
       <button
         id="add-category-btn"
-        class="bg-green-700 hover:bg-green-800 flex gap-2 rounded p-2 transition-colors"
+        class="bg-green-700 hover:bg-green-800 flex gap-2 rounded p-2 px-4 transition-colors"
       >
         <img src="assets/add.svg" alt="" />
         Add Category
       </button>
-      <section class="grid grid-cols-3">
+      <section class="mt-8 grid grid-cols-3">
+        <!-- Category Card -->
         <div>
           <div>
+            <!-- Category Name -->
             <h2>Transportation</h2>
+            <!-- Category Type -->
             <p>Expenses</p>
           </div>
           <div class="flex flex-col gap-2">
-            <div>
-              <input type="text" name="" id="" />
-            </div>
+            <!-- Transactions -->
+          </div>
+          <div class="flex gap-2">
+            <input
+              type="text"
+              name="transactionName"
+              id="transactionName"
+              placeholder="Name"
+              class="bg-zinc-900 text-white w-full rounded p-2"
+            />
+            <input
+              type="text"
+              name="transactionAmount"
+              id="transactionAmount"
+              placeholder="Amount"
+              class="bg-zinc-900 text-white w-full rounded p-2"
+            />
+            <button
+              class="bg-green-700 hover:bg-green-800 flex gap-2 rounded p-2 px-4 transition-colors"
+            >
+              Add
+            </button>
           </div>
         </div>
       </section>
@@ -88,6 +110,6 @@
         </button>
       </form>
     </dialog>
-    <script src="./scripts/expenses.js"></script>
+    <script type="module" src="./scripts/expenses.js"></script>
   </body>
 </html>

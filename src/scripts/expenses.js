@@ -1,5 +1,7 @@
-const openDialogBtn = document.getElementById("add-category-btn");
+import { Category } from "./classes/Category.js";
+
 // Get DOM elements
+const openDialogBtn = document.getElementById("add-category-btn");
 const addCategoryDialog = document.getElementById("add-category-dialog");
 const categoryForm = addCategoryDialog.querySelector("form");
 const submitCategoryBtn = document.getElementById("submit-category");
