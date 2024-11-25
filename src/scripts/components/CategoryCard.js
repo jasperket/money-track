@@ -39,8 +39,10 @@ class CategoryCard extends HTMLElement {
     transactionsContainer.innerHTML = ""; // Clear template transaction
 
     if (this._category?.transactions?.length) {
-      this._category.transactions.forEach((transaction) => {
+      this._category.transactions.forEach((transaction, index) => {
         const transactionElement = this.createTransactionElement(transaction);
+        // Add staggered animation delay based on index
+        transactionElement.style.animationDelay = `${index * 100}ms`;
         transactionsContainer.appendChild(transactionElement);
       });
     }
@@ -50,7 +52,8 @@ class CategoryCard extends HTMLElement {
 
   createTransactionElement(transaction) {
     const div = document.createElement("div");
-    div.className = "bg-zinc-900 grid grid-cols-3 rounded p-2 text-center";
+    div.className =
+      "bg-zinc-900 grid grid-cols-3 rounded p-2 text-center opacity-0 animate-transaction";
 
     div.innerHTML = `
       <p>${transaction.name}</p>
@@ -88,7 +91,6 @@ class CategoryCard extends HTMLElement {
         form.querySelector('[name="transactionAmount"]').value,
       ),
       date: form.querySelector('[name="transactionDate"]').value,
-      // Add a unique identifier
       id: Date.now().toString(),
     };
 
@@ -107,7 +109,7 @@ class CategoryCard extends HTMLElement {
       this._category.transactions = [];
     }
 
-    // Only dispatch the event - don't modify local data
+    // Dispatch the event
     this.dispatchEvent(
       new CustomEvent("transactionadded", {
         bubbles: true,
@@ -118,10 +120,20 @@ class CategoryCard extends HTMLElement {
       }),
     );
 
-    // Add new transaction to DOM
+    // Add new transaction to DOM with animation
     const transactionsContainer = this.querySelector(".mt-4");
     const transactionElement = this.createTransactionElement(newTransaction);
-    transactionsContainer.appendChild(transactionElement);
+
+    // Add animation class and handle animation end
+    transactionElement.classList.add("slide-in");
+    transactionElement.addEventListener("animationend", () => {
+      transactionElement.classList.remove("slide-in");
+    });
+
+    transactionsContainer.insertBefore(
+      transactionElement,
+      transactionsContainer.firstChild,
+    );
 
     form.reset();
   }
