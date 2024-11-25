@@ -1,12 +1,4 @@
-// src/scripts/components/CategoryCard.js
-
-// Helper function to format currency
-const formatCurrency = (amount) => {
-  return new Intl.NumberFormat("en-PH", {
-    style: "currency",
-    currency: "PHP",
-  }).format(amount);
-};
+import { formatCurrency } from "../utils/helpers.js";
 
 class CategoryCard extends HTMLElement {
   constructor() {
