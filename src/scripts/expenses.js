@@ -2,6 +2,7 @@
 
 import { Category } from "./classes/Category.js";
 import "./components/CategoryCard.js";
+import "./components/TransactionItem.js";
 
 // Get DOM elements
 const openDialogBtn = document.getElementById("add-category-btn");

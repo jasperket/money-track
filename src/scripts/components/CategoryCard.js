@@ -1,4 +1,5 @@
 import { formatCurrency } from "../utils/helpers.js";
+import "./TransactionItem.js";
 
 class CategoryCard extends HTMLElement {
   constructor() {
@@ -50,28 +51,9 @@ class CategoryCard extends HTMLElement {
   }
 
   createTransactionElement(transaction) {
-    const template = document.getElementById("transaction-template");
-    const clone = template.content.cloneNode(true);
-    const transactionDiv = clone.querySelector("div");
-
-    // Set transaction data
-    transactionDiv.dataset.transactionId = transaction.id;
-    clone.querySelector(".transaction-name").textContent = transaction.name;
-    clone.querySelector(".transaction-amount").textContent = formatCurrency(
-      transaction.amount,
-    );
-    clone.querySelector(".transaction-date").textContent = new Date(
-      transaction.date,
-    ).toLocaleDateString();
-
-    // Add delete event listener
-    const deleteButton = clone.querySelector(".delete-transaction");
-    deleteButton.addEventListener("click", (e) => {
-      e.stopPropagation();
-      this.handleDeleteTransaction(transaction.id);
-    });
-
-    return transactionDiv;
+    const transactionElement = document.createElement("transaction-item");
+    transactionElement.transaction = transaction;
+    return transactionElement;
   }
 
   handleDeleteTransaction(transactionId) {
