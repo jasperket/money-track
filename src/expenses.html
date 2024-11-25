@@ -13,7 +13,56 @@
     <link rel="stylesheet" href="./styles/reset.css" />
     <link rel="stylesheet" href="./styles/output.css" />
   </head>
-  <body class="bg-zinc-950 text-white ml-auto mr-auto w-[1200px] font-sans">
+  <body class="bg-zinc-950 text-white ml-auto mr-auto px-64 font-sans">
+    <!-- Components -->
+    <!-- Category Card -->
+    <template id="category-card-template">
+      <div class="border-green-400 rounded-xl border p-6">
+        <div class="flex items-center gap-2">
+          <!-- Category Name -->
+          <h2 class="text-green-400 text-2xl font-bold">Transportation</h2>
+          <img src="assets/delete.svg" alt="" class="delete cursor-pointer" />
+          <!-- Category Type -->
+          <p class="ml-auto">Expenses</p>
+        </div>
+        <div class="mt-4 flex flex-col gap-2">
+          <!-- Transactions -->
+          <div class="bg-zinc-900 grid grid-cols-3 rounded p-2 text-center">
+            <p>Bus</p>
+            <p class="border-green-400 border-x">₱50.00</p>
+            <p>11/25/2024</p>
+          </div>
+        </div>
+        <form action="POST" class="mt-8 flex gap-2">
+          <input
+            type="text"
+            name="transactionName"
+            id="transactionName"
+            placeholder="Name"
+            class="bg-zinc-900 text-white w-full rounded p-2"
+          />
+          <input
+            type="text"
+            name="transactionAmount"
+            id="transactionAmount"
+            placeholder="Amount"
+            class="bg-zinc-900 text-white w-full rounded p-2"
+          />
+          <input
+            type="date"
+            name="transactionDate"
+            id="transactionDate"
+            placeholder="Date"
+            class="bg-zinc-900 text-white w-full rounded p-2"
+          />
+          <button
+            class="bg-green-700 hover:bg-green-800 flex gap-2 rounded p-2 px-4 transition-colors"
+          >
+            Add
+          </button>
+        </form>
+      </div>
+    </template>
     <header>
       <nav class="flex items-center gap-12 py-4">
         <h1 class="text-green-400 text-4xl font-bold">MoneyTrack</h1>
@@ -32,39 +81,7 @@
         Add Category
       </button>
       <section class="mt-8 grid grid-cols-3">
-        <!-- Category Card -->
-        <div>
-          <div>
-            <!-- Category Name -->
-            <h2>Transportation</h2>
-            <!-- Category Type -->
-            <p>Expenses</p>
-          </div>
-          <div class="flex flex-col gap-2">
-            <!-- Transactions -->
-          </div>
-          <div class="flex gap-2">
-            <input
-              type="text"
-              name="transactionName"
-              id="transactionName"
-              placeholder="Name"
-              class="bg-zinc-900 text-white w-full rounded p-2"
-            />
-            <input
-              type="text"
-              name="transactionAmount"
-              id="transactionAmount"
-              placeholder="Amount"
-              class="bg-zinc-900 text-white w-full rounded p-2"
-            />
-            <button
-              class="bg-green-700 hover:bg-green-800 flex gap-2 rounded p-2 px-4 transition-colors"
-            >
-              Add
-            </button>
-          </div>
-        </div>
+        <!-- Category Cards render here -->
       </section>
     </main>
     <dialog

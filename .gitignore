@@ -28,3 +28,5 @@ out/
 .next/
 .nuxt/
 .temp/
+
+repomix-output.txt

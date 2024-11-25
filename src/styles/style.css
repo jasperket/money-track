@@ -34,3 +34,7 @@ dialog[open] {
     opacity: 1;
   }
 }
+
+.delete:hover {
+  background-image: url("../assets/delete_fill.svg");
+}
