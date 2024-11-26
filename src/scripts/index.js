@@ -5,6 +5,7 @@ import "./components/CashFlowChart.js";
 import "./components/ExpenseDIstributionChart.js";
 import "./components/WeeklySpendingChart.js";
 import "./components/MonthlyComparisonChart.js";
+import "./components/IncomeExpenseDonutChart.js";
 
 // Constants for time periods
 const TIME_PERIODS = {
