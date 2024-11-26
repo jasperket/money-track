@@ -616,18 +616,6 @@ video {
   z-index: 10;
 }
 
-.col-span-3 {
-  grid-column: span 3 / span 3;
-}
-
-.col-span-4 {
-  grid-column: span 4 / span 4;
-}
-
-.col-span-5 {
-  grid-column: span 5 / span 5;
-}
-
 .col-span-12 {
   grid-column: span 12 / span 12;
 }
@@ -668,33 +656,32 @@ video {
   display: grid;
 }
 
-.hidden {
-  display: none;
-}
-
-.h-64 {
-  height: 16rem;
+.h-80 {
+  height: 20rem;
 }
 
 .h-96 {
   height: 24rem;
 }
 
-.h-80 {
-  height: 20rem;
+.h-\[calc\(100\%-8rem\)\] {
+  height: calc(100% - 8rem);
 }
 
-.w-64 {
-  width: 16rem;
+.h-72 {
+  height: 18rem;
+}
+
+.h-64 {
+  height: 16rem;
+}
+
+.h-56 {
+  height: 14rem;
 }
 
 .w-full {
   width: 100%;
-}
-
-.w-min {
-  width: -moz-min-content;
-  width: min-content;
 }
 
 .cursor-pointer {
@@ -761,8 +748,20 @@ video {
   align-self: center;
 }
 
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
 .overflow-x-scroll {
   overflow-x: scroll;
+}
+
+.overflow-y-scroll {
+  overflow-y: scroll;
 }
 
 .rounded {
@@ -881,14 +880,6 @@ video {
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
-}
-
-.pb-64 {
-  padding-bottom: 16rem;
-}
-
-.pb-16 {
-  padding-bottom: 4rem;
 }
 
 .text-center {
@@ -1081,6 +1072,10 @@ dialog[open] {
 }
 
 @media (min-width: 640px) {
+  .sm\:col-span-6 {
+    grid-column: span 6 / span 6;
+  }
+
   .sm\:w-64 {
     width: 16rem;
   }
@@ -1099,45 +1094,27 @@ dialog[open] {
   .md\:col-span-6 {
     grid-column: span 6 / span 6;
   }
+}
 
-  .md\:w-64 {
-    width: 16rem;
+@media (min-width: 1024px) {
+  .lg\:col-span-6 {
+    grid-column: span 6 / span 6;
   }
+}
 
-  .md\:w-min {
-    width: -moz-min-content;
-    width: min-content;
+@media (min-width: 1280px) {
+  .xl\:col-span-6 {
+    grid-column: span 6 / span 6;
   }
 }
 
 @media (min-width: 1536px) {
-  .\32xl\:col-span-6 {
-    grid-column: span 6 / span 6;
-  }
-
-  .\32xl\:col-span-3 {
-    grid-column: span 3 / span 3;
-  }
-
   .\32xl\:col-span-4 {
     grid-column: span 4 / span 4;
-  }
-
-  .\32xl\:w-64 {
-    width: 16rem;
-  }
-
-  .\32xl\:w-min {
-    width: -moz-min-content;
-    width: min-content;
   }
 
   .\32xl\:px-32 {
     padding-left: 8rem;
     padding-right: 8rem;
-  }
-
-  .\32xl\:text-left {
-    text-align: left;
   }
 }

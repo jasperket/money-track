@@ -8,5 +8,6 @@ module.exports = {
       serif: ["'Source Serif 4'", "serif"],
     },
   },
+  safelist: ["col-span-12, sm:col-span-6, 2xl:col-span-4"],
   plugins: [],
 };

@@ -17,11 +17,13 @@ class CategoryCard extends HTMLElement {
 
   set category(value) {
     this._category = value;
-    this.render();
+    this.renderContent();
   }
 
   connectedCallback() {
-    this.render();
+    // Add the grid column classes to the custom element itself
+    this.className = "col-span-12 xl:col-span-6 2xl:col-span-4";
+    this.renderContent();
     this.setupEventListeners();
   }
 
@@ -222,7 +224,7 @@ class CategoryCard extends HTMLElement {
     form.reset();
   }
 
-  render() {
+  renderContent() {
     this.innerHTML = "";
     const content = this.createFromTemplate();
     this.appendChild(content);
