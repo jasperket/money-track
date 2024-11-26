@@ -1,4 +1,4 @@
-// Format to peso
+// Format to Philippine peso
 export const formatCurrency = (amount) => {
   return new Intl.NumberFormat("en-PH", {
     style: "currency",
