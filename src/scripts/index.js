@@ -2,6 +2,7 @@
 import { formatCurrency, animateValue } from "./utils/helpers.js";
 import { renderRecentTransactions } from "./components/ReadOnlyTransactionItem.js";
 import "./components/CashFlowChart.js";
+import "./components/ExpenseDIstributionChart.js";
 
 // Constants for time periods
 const TIME_PERIODS = {
