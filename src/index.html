@@ -18,7 +18,7 @@
     <!-- Read-only Transaction Item Template -->
     <template id="readonly-transaction-template">
       <div
-        class="animate-transaction grid grid-cols-3 items-center rounded bg-zinc-900 p-2 text-center opacity-0"
+        class="animate-transaction grid grid-cols-3 items-center overflow-x-scroll rounded bg-zinc-900 p-2 text-center opacity-0"
       >
         <p class="transaction-name">Bus</p>
         <p class="transaction-amount border-x border-green-400">₱50.00</p>
@@ -105,8 +105,8 @@
           >
             Cash Flow
           </h2>
-          <div class="mt-2">
-            <!-- Cash flow chart will be rendered here -->
+          <div class="mt-2 flex items-center justify-center">
+            <cash-flow-chart></cash-flow-chart>
           </div>
         </div>
 
