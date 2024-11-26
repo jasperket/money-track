@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./styles/reset.css" />
     <link rel="stylesheet" href="./styles/output.css" />
   </head>
-  <body class="ml-auto mr-auto bg-zinc-950 px-32 font-sans text-white">
+  <body class="ml-auto mr-auto bg-zinc-950 px-32 pb-16 font-sans text-white">
     <!-- Components -->
     <!-- Read-only Transaction Item Template -->
     <template id="readonly-transaction-template">
@@ -82,7 +82,7 @@
       </div>
 
       <!-- Dashboard -->
-      <section class="mt-8 grid grid-cols-12 gap-4">
+      <section class="mt-8 grid grid-cols-12 gap-8">
         <div
           class="relative col-span-3 flex flex-col gap-4 rounded-xl border border-green-400 p-6"
         >
@@ -133,8 +133,8 @@
           >
             Weekly Spending
           </h2>
-          <div class="mt-2">
-            <!-- Weekly spending breakdown chart will be rendered here -->
+          <div class="mt-2 flex items-center justify-center">
+            <weekly-spending-chart></weekly-spending-chart>
           </div>
         </div>
 
