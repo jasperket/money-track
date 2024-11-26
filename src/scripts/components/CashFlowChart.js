@@ -48,7 +48,7 @@ class CashFlowChart extends HTMLElement {
     // Add styles to make the component responsive
     this.style.display = "block";
     this.style.width = "100%";
-    this.style.height = "400px"; // Increased height for better visibility
+    this.style.height = "15rem"; // Increased height for better visibility
     this.style.position = "relative";
   }
 

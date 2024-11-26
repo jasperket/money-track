@@ -45,7 +45,6 @@ class ExpenseDistributionChart extends HTMLElement {
     this.style.display = "block";
     this.style.width = "100%";
     this.style.height = "100%";
-    this.style.minHeight = "400px";
     this.style.position = "relative";
   }
 
@@ -202,8 +201,7 @@ class ExpenseDistributionChart extends HTMLElement {
 
   render() {
     const wrapper = document.createElement("div");
-    wrapper.style.width = "100%";
-    wrapper.style.height = "100%";
+    wrapper.style.height = "15rem";
     wrapper.style.position = "relative";
 
     const canvas = document.createElement("canvas");
