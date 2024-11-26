@@ -58,12 +58,26 @@ class MonthlyComparisonChart extends HTMLElement {
     const categories = JSON.parse(localStorage.getItem("categories")) || [];
     const monthlyData = new Map();
 
-    // Get all transactions and organize by month
+    // Initialize current month and previous month with zero values
+    const today = new Date();
+    const currentMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
+    const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1);
+    const previousMonth = `${lastMonth.getFullYear()}-${String(lastMonth.getMonth() + 1).padStart(2, "0")}`;
+
+    // Initialize with zero values to ensure these months always appear
+    monthlyData.set(currentMonth, { income: 0, expenses: 0 });
+    monthlyData.set(previousMonth, { income: 0, expenses: 0 });
+
+    // Process all transactions
     categories.forEach((category) => {
       if (!category.transactions) return;
 
       category.transactions.forEach((transaction) => {
+        if (!transaction.date || !transaction.amount) return;
+
         const date = new Date(transaction.date);
+        if (isNaN(date.getTime())) return; // Skip invalid dates
+
         const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
 
         if (!monthlyData.has(monthKey)) {
@@ -71,6 +85,8 @@ class MonthlyComparisonChart extends HTMLElement {
         }
 
         const amount = parseFloat(transaction.amount);
+        if (isNaN(amount)) return; // Skip invalid amounts
+
         const monthData = monthlyData.get(monthKey);
 
         if (category.type === "income") {
@@ -89,6 +105,15 @@ class MonthlyComparisonChart extends HTMLElement {
     return sortedEntries;
   }
 
+  formatMonthLabel(monthKey) {
+    const [year, month] = monthKey.split("-");
+    const date = new Date(parseInt(year), parseInt(month) - 1);
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      year: "2-digit",
+    });
+  }
+
   createChart(canvas) {
     if (!window.Chart) {
       console.error("Chart.js not loaded");
@@ -97,16 +122,9 @@ class MonthlyComparisonChart extends HTMLElement {
 
     const monthlyData = this.processData();
 
-    const labels = monthlyData.map(([month]) => {
-      const [year, monthNum] = month.split("-");
-      return new Date(year, monthNum - 1).toLocaleDateString("en-US", {
-        month: "short",
-        year: "2-digit",
-      });
-    });
-
-    const incomeData = monthlyData.map(([_, data]) => data.income);
-    const expensesData = monthlyData.map(([_, data]) => data.expenses);
+    const labels = monthlyData.map(([month]) => this.formatMonthLabel(month));
+    const incomeData = monthlyData.map(([_, data]) => data.income || 0);
+    const expensesData = monthlyData.map(([_, data]) => data.expenses || 0);
 
     const ctx = canvas.getContext("2d");
     return new window.Chart(ctx, {
@@ -149,6 +167,7 @@ class MonthlyComparisonChart extends HTMLElement {
             grid: {
               color: "rgba(255, 255, 255, 0.1)",
             },
+            beginAtZero: true,
             ticks: {
               color: "#ffffff",
               font: {
@@ -178,20 +197,14 @@ class MonthlyComparisonChart extends HTMLElement {
           tooltip: {
             callbacks: {
               label: function (context) {
-                const label = context.dataset.label || "";
-                const value = context.parsed.y;
-                return `${label}: ${new Intl.NumberFormat("en-PH", {
-                  style: "currency",
-                  currency: "PHP",
-                }).format(value)}`;
-              },
-              footer: function (tooltipItems) {
-                const values = tooltipItems.map((item) => item.parsed.y);
-                const total = values[0] - values[1]; // Income - Expenses
-                return `Net: ${new Intl.NumberFormat("en-PH", {
-                  style: "currency",
-                  currency: "PHP",
-                }).format(total)}`;
+                const value = context.raw || 0;
+                return `${context.dataset.label}: ${new Intl.NumberFormat(
+                  "en-PH",
+                  {
+                    style: "currency",
+                    currency: "PHP",
+                  },
+                ).format(value)}`;
               },
             },
           },
