@@ -4,6 +4,7 @@ import { renderRecentTransactions } from "./components/ReadOnlyTransactionItem.j
 import "./components/CashFlowChart.js";
 import "./components/ExpenseDIstributionChart.js";
 import "./components/WeeklySpendingChart.js";
+import "./components/MonthlyComparisonChart.js";
 
 // Constants for time periods
 const TIME_PERIODS = {
