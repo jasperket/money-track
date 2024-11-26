@@ -13,21 +13,21 @@
     <link rel="stylesheet" href="./styles/reset.css" />
     <link rel="stylesheet" href="./styles/output.css" />
   </head>
-  <body class="bg-zinc-950 text-white ml-auto mr-auto px-32 font-sans">
+  <body class="ml-auto mr-auto bg-zinc-950 px-32 font-sans text-white">
     <!-- Components -->
     <!-- Transaction Item Template -->
     <template id="transaction-template">
       <div
-        class="bg-zinc-900 animate-transaction grid grid-cols-4 items-center rounded p-2 text-center opacity-0"
+        class="animate-transaction grid grid-cols-4 items-center rounded bg-zinc-900 p-2 text-center opacity-0"
       >
         <p class="transaction-name">Bus</p>
-        <p class="transaction-amount border-green-400 border-x">₱50.00</p>
+        <p class="transaction-amount border-x border-green-400">₱50.00</p>
         <p class="transaction-date">11/25/2024</p>
         <div class="flex items-center justify-center">
           <img
             src="assets/delete.svg"
             alt="Delete transaction"
-            class="delete-transaction hover:bg-red-950 cursor-pointer rounded-full p-1.5 transition-colors"
+            class="delete-transaction cursor-pointer rounded-full p-1.5 transition-colors hover:bg-red-950"
           />
         </div>
       </div>
@@ -35,10 +35,10 @@
 
     <!-- Category Card Template -->
     <template id="category-card-template">
-      <div class="border-green-400 rounded-xl border p-6">
+      <div class="rounded-xl border border-green-400 p-6">
         <div class="flex items-center gap-2">
           <!-- Category Name -->
-          <h2 class="text-green-400 text-2xl font-bold">Transportation</h2>
+          <h2 class="text-2xl font-bold text-green-400">Transportation</h2>
           <img src="assets/delete.svg" alt="" class="delete cursor-pointer" />
           <!-- Category Type -->
           <p class="ml-auto">Expenses</p>
@@ -52,24 +52,24 @@
             name="transactionName"
             id="transactionName"
             placeholder="Name"
-            class="bg-zinc-900 text-white w-full rounded p-2"
+            class="w-full rounded bg-zinc-900 p-2 text-white"
           />
           <input
             type="text"
             name="transactionAmount"
             id="transactionAmount"
             placeholder="Amount"
-            class="bg-zinc-900 text-white w-full rounded p-2"
+            class="w-full rounded bg-zinc-900 p-2 text-white"
           />
           <input
             type="date"
             name="transactionDate"
             id="transactionDate"
             placeholder="Date"
-            class="bg-zinc-900 text-white rounded p-2"
+            class="rounded bg-zinc-900 p-2 text-white"
           />
           <button
-            class="bg-green-700 hover:bg-green-800 flex gap-2 rounded p-2 px-4 transition-colors"
+            class="flex gap-2 rounded bg-green-700 p-2 px-4 transition-colors hover:bg-green-800"
           >
             Add
           </button>
@@ -80,7 +80,7 @@
     <!-- Add Category Dialog -->
     <dialog
       id="add-category-dialog"
-      class="bg-zinc-900 text-white animate-dialog rounded-lg p-8"
+      class="animate-dialog rounded-lg bg-zinc-900 p-8 text-white"
     >
       <div class="flex items-center justify-between">
         <p class="text-2xl font-bold">New Category</p>
@@ -88,7 +88,7 @@
           id="add-category-close"
           src="assets/close.svg"
           alt=""
-          class="hover:bg-green-950 cursor-pointer rounded-full p-1 transition-colors"
+          class="cursor-pointer rounded-full p-1 transition-colors hover:bg-green-950"
         />
       </div>
       <form action="POST" class="mt-4 flex flex-col gap-4">
@@ -98,7 +98,7 @@
             type="text"
             id="name"
             name="name"
-            class="bg-zinc-950 text-white w-full rounded-lg p-2"
+            class="w-full rounded-lg bg-zinc-950 p-2 text-white"
           />
         </div>
         <div class="flex flex-col gap-2">
@@ -106,7 +106,7 @@
           <select
             name="type"
             id="type"
-            class="bg-zinc-950 text-white w-full rounded-lg p-3"
+            class="w-full rounded-lg bg-zinc-950 p-3 text-white"
           >
             <option value="income">Income</option>
             <option value="expense">Expense</option>
@@ -114,7 +114,7 @@
         </div>
         <button
           type="submit"
-          class="bg-green-700 hover:bg-green-800 w-full rounded p-2 transition-colors"
+          class="w-full rounded bg-green-700 p-2 transition-colors hover:bg-green-800"
           id="submit-category"
         >
           Add New Category
@@ -125,7 +125,7 @@
     <!-- Confirmation Dialog -->
     <dialog
       id="confirm-dialog"
-      class="bg-zinc-900 text-white animate-dialog rounded-lg p-8"
+      class="animate-dialog rounded-lg bg-zinc-900 p-8 text-white"
     >
       <div class="flex flex-col gap-4">
         <div class="flex items-center justify-between">
@@ -134,20 +134,20 @@
             id="confirm-dialog-close"
             src="assets/close.svg"
             alt=""
-            class="hover:bg-green-950 cursor-pointer rounded-full p-1 transition-colors"
+            class="cursor-pointer rounded-full p-1 transition-colors hover:bg-green-950"
           />
         </div>
         <p id="confirm-message">Are you sure you want to delete this item?</p>
         <div class="mt-2 flex justify-end gap-2">
           <button
             id="confirm-cancel"
-            class="bg-zinc-700 hover:bg-zinc-800 rounded px-4 py-2 transition-colors"
+            class="rounded bg-zinc-700 px-4 py-2 transition-colors hover:bg-zinc-800"
           >
             Cancel
           </button>
           <button
             id="confirm-delete"
-            class="bg-red-700 hover:bg-red-800 rounded px-4 py-2 transition-colors"
+            class="rounded bg-red-700 px-4 py-2 transition-colors hover:bg-red-800"
           >
             Delete
           </button>
@@ -157,7 +157,7 @@
 
     <header>
       <nav class="flex items-center gap-12 py-4">
-        <h1 class="text-green-400 text-4xl font-bold">MoneyTrack</h1>
+        <h1 class="text-4xl font-bold text-green-400">MoneyTrack</h1>
         <a href="./index.html" class="transition-all hover:underline"
           >Dashboard
         </a>
@@ -165,9 +165,10 @@
       </nav>
     </header>
     <main class="mt-4">
+      <!-- Add Category Button -->
       <button
         id="add-category-btn"
-        class="bg-green-700 hover:bg-green-800 flex gap-2 rounded p-2 px-4 transition-colors"
+        class="flex gap-2 rounded bg-green-700 p-2 px-4 transition-colors hover:bg-green-800"
       >
         <img src="assets/add.svg" alt="" />
         Add Category

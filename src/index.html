@@ -25,6 +25,7 @@
     </header>
     <main>
       <div class="mt-8 flex gap-8">
+        <!-- Current Balance -->
         <div class="relative w-64 rounded-xl border border-green-400 p-4">
           <h2 class="absolute left-4 top-[-0.75rem] z-10 bg-zinc-950 px-1">
             Current Balance
@@ -34,31 +35,33 @@
           </p>
         </div>
 
+        <!-- Expenses -->
         <div
           class="relative flex w-64 flex-col gap-4 rounded-xl border border-green-400 p-4"
         >
           <h2 class="absolute left-4 top-[-0.75rem] z-10 bg-zinc-950 px-1">
             Expenses
           </h2>
-          <p id="currentBalance" class="text-4xl font-bold text-green-400">
-            ₱0.00
-          </p>
+          <p id="expenses" class="text-4xl font-bold text-green-400">₱0.00</p>
         </div>
+
+        <!-- Income -->
         <div
           class="relative flex w-64 flex-col gap-4 rounded-xl border border-green-400 p-4"
         >
           <h2 class="absolute left-4 top-[-0.75rem] z-10 bg-zinc-950 px-1">
             Income
           </h2>
-          <p id="currentBalance" class="text-4xl font-bold text-green-400">
-            ₱0.00
-          </p>
+          <p id="income" class="text-4xl font-bold text-green-400">₱0.00</p>
         </div>
+
+        <!-- Expenses and Income options -->
         <select
-          name=""
-          id=""
+          name="period"
+          id="period-select"
           class="w-min self-center rounded-lg bg-zinc-900 p-4 text-white"
         >
+          <option value="total">Total</option>
           <option value="daily">Daily</option>
           <option value="weekly">Weekly</option>
           <option value="monthly">Monthly</option>
