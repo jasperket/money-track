@@ -1,5 +1,6 @@
 // src/scripts/index.js
 import { formatCurrency, animateValue } from "./utils/helpers.js";
+import { renderRecentTransactions } from "./components/ReadOnlyTransactionItem.js";
 
 // Constants for time periods
 const TIME_PERIODS = {
@@ -137,6 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Set initial period and update displays with animation
   updateDisplays(periodSelect.value, true);
+  // Render recent transactions
+  renderRecentTransactions(5);
 
   // Listen for period changes
   periodSelect.addEventListener("change", (e) => {
@@ -171,5 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Listen for storage changes
   window.addEventListener("storage", () => {
     updateDisplays(periodSelect.value, true);
+    renderRecentTransactions(5);
   });
 });

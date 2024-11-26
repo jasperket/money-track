@@ -14,6 +14,18 @@
     <link rel="stylesheet" href="./styles/output.css" />
   </head>
   <body class="ml-auto mr-auto bg-zinc-950 px-32 font-sans text-white">
+    <!-- Components -->
+    <!-- Read-only Transaction Item Template -->
+    <template id="readonly-transaction-template">
+      <div
+        class="animate-transaction grid grid-cols-3 items-center rounded bg-zinc-900 p-2 text-center opacity-0"
+      >
+        <p class="transaction-name">Bus</p>
+        <p class="transaction-amount border-x border-green-400">₱50.00</p>
+        <p class="transaction-date">11/25/2024</p>
+      </div>
+    </template>
+
     <header>
       <nav class="flex items-center gap-12 py-4">
         <h1 class="text-4xl font-bold text-green-400">MoneyTrack</h1>
@@ -28,7 +40,7 @@
         <!-- Current Balance -->
         <div class="relative w-64 rounded-xl border border-green-400 p-4">
           <h2 class="absolute left-4 top-[-0.75rem] z-10 bg-zinc-950 px-1">
-            Current Balance
+            Balance
           </h2>
           <p id="currentBalance" class="text-4xl font-bold text-green-400">
             ₱0.00
@@ -68,6 +80,22 @@
           <option value="yearly">Yearly</option>
         </select>
       </div>
+
+      <!-- Dashboard -->
+      <section class="mt-8 grid grid-cols-12 gap-4">
+        <div
+          class="relative col-span-3 flex flex-col gap-4 rounded-xl border border-green-400 p-6"
+        >
+          <h2
+            class="absolute top-[-1rem] bg-zinc-950 px-2 text-2xl font-bold text-white"
+          >
+            Recent Transactions
+          </h2>
+          <div id="recent-transactions" class="mt-2 flex flex-col gap-2">
+            <!-- Transactions will be rendered here -->
+          </div>
+        </div>
+      </section>
     </main>
     <script type="module" src="./scripts/index.js"></script>
   </body>
