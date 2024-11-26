@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./styles/reset.css" />
     <link rel="stylesheet" href="./styles/output.css" />
   </head>
-  <body class="ml-auto mr-auto bg-zinc-950 px-32 font-sans text-white">
+  <body class="ml-auto mr-auto bg-zinc-950 px-4 font-sans text-white 2xl:px-32">
     <!-- Components -->
     <!-- Read-only Transaction Item Template -->
     <template id="readonly-transaction-template">
@@ -27,18 +27,24 @@
     </template>
 
     <header>
-      <nav class="flex items-center gap-12 py-4">
+      <nav
+        class="flex flex-wrap items-center justify-center gap-12 py-4 sm:justify-start"
+      >
         <h1 class="text-4xl font-bold text-green-400">MoneyTrack</h1>
-        <a href="./index.html" class="transition-all hover:underline"
-          >Dashboard</a
-        >
-        <a href="./expenses.html" class="hover:underline">Expenses</a>
+        <div class="flex items-center gap-12">
+          <a href="./index.html" class="transition-all hover:underline"
+            >Dashboard</a
+          >
+          <a href="./expenses.html" class="hover:underline">Expenses</a>
+        </div>
       </nav>
     </header>
     <main>
-      <div class="mt-8 flex gap-8">
+      <div class="mt-8 flex flex-wrap gap-8">
         <!-- Current Balance -->
-        <div class="relative w-64 rounded-xl border border-green-400 p-4">
+        <div
+          class="relative w-full rounded-xl border border-green-400 p-4 sm:w-64"
+        >
           <h2 class="absolute left-4 top-[-0.75rem] z-10 bg-zinc-950 px-1">
             Balance
           </h2>
@@ -49,7 +55,7 @@
 
         <!-- Expenses -->
         <div
-          class="relative flex w-64 flex-col gap-4 rounded-xl border border-green-400 p-4"
+          class="relative flex w-full flex-col gap-4 rounded-xl border border-green-400 p-4 sm:w-64"
         >
           <h2 class="absolute left-4 top-[-0.75rem] z-10 bg-zinc-950 px-1">
             Expenses
@@ -59,7 +65,7 @@
 
         <!-- Income -->
         <div
-          class="relative flex w-64 flex-col gap-4 rounded-xl border border-green-400 p-4"
+          class="relative flex w-full flex-col gap-4 rounded-xl border border-green-400 p-4 sm:w-64"
         >
           <h2 class="absolute left-4 top-[-0.75rem] z-10 bg-zinc-950 px-1">
             Income
@@ -71,7 +77,7 @@
         <select
           name="period"
           id="period-select"
-          class="w-min self-center rounded-lg bg-zinc-900 p-4 text-white"
+          class="w-full self-center rounded-lg bg-zinc-900 p-4 text-white sm:w-min"
         >
           <option value="total">Total</option>
           <option value="daily">Daily</option>
@@ -83,8 +89,9 @@
 
       <!-- Dashboard -->
       <section class="mt-8 grid grid-cols-12 gap-8">
+        <!-- Recent Transactions -->
         <div
-          class="relative col-span-3 flex h-80 flex-col gap-4 rounded-xl border border-green-400 p-6"
+          class="relative col-span-12 flex h-80 flex-col gap-4 rounded-xl border border-green-400 p-6 md:col-span-6 2xl:col-span-4"
         >
           <h2
             class="absolute top-[-1rem] bg-zinc-950 px-2 text-2xl font-bold text-white"
@@ -101,7 +108,7 @@
 
         <!-- Cash Flow Trend Chart -->
         <div
-          class="relative col-span-5 flex h-80 flex-col gap-4 rounded-xl border border-green-400 p-6"
+          class="relative col-span-12 flex h-80 flex-col gap-4 rounded-xl border border-green-400 p-6 md:col-span-6 2xl:col-span-4"
         >
           <h2
             class="absolute top-[-1rem] bg-zinc-950 px-2 text-2xl font-bold text-white"
@@ -115,7 +122,7 @@
 
         <!-- Expenses Distribution Pie Chart -->
         <div
-          class="relative col-span-4 flex h-80 flex-col gap-4 rounded-xl border border-green-400 p-6"
+          class="relative col-span-12 flex h-80 flex-col gap-4 rounded-xl border border-green-400 p-6 md:col-span-6 2xl:col-span-4"
         >
           <h2
             class="absolute top-[-1rem] bg-zinc-950 px-2 text-2xl font-bold text-white"
@@ -129,7 +136,7 @@
 
         <!-- Weekly Spending Breakdown Stacked Bar Chart -->
         <div
-          class="relative col-span-4 flex h-80 flex-col gap-4 rounded-xl border border-green-400 p-6"
+          class="relative col-span-12 flex h-80 flex-col gap-4 rounded-xl border border-green-400 p-6 md:col-span-6 2xl:col-span-4"
         >
           <h2
             class="absolute top-[-1rem] bg-zinc-950 px-2 text-2xl font-bold text-white"
@@ -143,7 +150,7 @@
 
         <!-- Monthly Comparison Bar Chart -->
         <div
-          class="relative col-span-4 flex h-80 flex-col gap-4 rounded-xl border border-green-400 p-6"
+          class="relative col-span-12 flex h-80 flex-col gap-4 rounded-xl border border-green-400 p-6 md:col-span-6 2xl:col-span-4"
         >
           <h2
             class="absolute top-[-1rem] bg-zinc-950 px-2 text-2xl font-bold text-white"
@@ -157,7 +164,7 @@
 
         <!-- Income vs Expense Breakdown Pie Chart -->
         <div
-          class="relative col-span-4 flex h-80 flex-col gap-4 rounded-xl border border-green-400 p-6"
+          class="relative col-span-12 flex h-80 flex-col gap-4 rounded-xl border border-green-400 p-6 md:col-span-6 2xl:col-span-4"
         >
           <h2
             class="absolute top-[-1rem] bg-zinc-950 px-2 text-2xl font-bold text-white"
