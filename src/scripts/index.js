@@ -1,4 +1,3 @@
-// src/scripts/index.js
 import { formatCurrency, animateValue } from "./utils/helpers.js";
 import { renderRecentTransactions } from "./components/ReadOnlyTransactionItem.js";
 import "./components/CashFlowChart.js";
@@ -6,6 +5,7 @@ import "./components/ExpenseDIstributionChart.js";
 import "./components/WeeklySpendingChart.js";
 import "./components/MonthlyComparisonChart.js";
 import "./components/IncomeExpenseDonutChart.js";
+import { initializeWithPlaceholderData } from "./utils/placeholderData.js";
 
 // Constants for time periods
 const TIME_PERIODS = {
@@ -139,6 +139,7 @@ function updateDisplays(selectedPeriod, animate = true) {
 
 // Initialize and set up event listeners
 document.addEventListener("DOMContentLoaded", () => {
+  initializeWithPlaceholderData();
   const periodSelect = document.querySelector("#period-select");
 
   // Set initial period and update displays with animation

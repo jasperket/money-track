@@ -1,8 +1,7 @@
-// src/scripts/expenses.js
-
 import { Category } from "./classes/Category.js";
 import "./components/CategoryCard.js";
 import "./components/TransactionItem.js";
+import { initializeWithPlaceholderData } from "./utils/placeholderData.js";
 
 // Get DOM elements
 const openDialogBtn = document.getElementById("add-category-btn");
@@ -178,4 +177,7 @@ categoryForm.addEventListener("submit", (e) => {
 });
 
 // Initialize when the page loads
-document.addEventListener("DOMContentLoaded", renderCategories);
+document.addEventListener("DOMContentLoaded", () => {
+  initializeWithPlaceholderData();
+  renderCategories();
+});
