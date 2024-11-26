@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="./styles/reset.css" />
     <link rel="stylesheet" href="./styles/output.css" />
   </head>
-  <body class="bg-zinc-950 text-white ml-auto mr-auto px-32 font-sans">
+  <body class="ml-auto mr-auto bg-zinc-950 px-32 font-sans text-white">
     <header>
       <nav class="flex items-center gap-12 py-4">
-        <h1 class="text-green-400 text-4xl font-bold">MoneyTrack</h1>
+        <h1 class="text-4xl font-bold text-green-400">MoneyTrack</h1>
         <a href="./index.html" class="transition-all hover:underline"
           >Dashboard</a
         >
@@ -24,11 +24,46 @@
       </nav>
     </header>
     <main>
-      <div class="mt-4">
-        <h2>Current Balance:</h2>
-        <p id="currentBalance" class="text-green-400 text-4xl font-bold">
-          ₱0.00
-        </p>
+      <div class="mt-8 flex gap-8">
+        <div class="relative w-64 rounded-xl border border-green-400 p-4">
+          <h2 class="absolute left-4 top-[-0.75rem] z-10 bg-zinc-950 px-1">
+            Current Balance
+          </h2>
+          <p id="currentBalance" class="text-4xl font-bold text-green-400">
+            ₱0.00
+          </p>
+        </div>
+
+        <div
+          class="relative flex w-64 flex-col gap-4 rounded-xl border border-green-400 p-4"
+        >
+          <h2 class="absolute left-4 top-[-0.75rem] z-10 bg-zinc-950 px-1">
+            Expenses
+          </h2>
+          <p id="currentBalance" class="text-4xl font-bold text-green-400">
+            ₱0.00
+          </p>
+        </div>
+        <div
+          class="relative flex w-64 flex-col gap-4 rounded-xl border border-green-400 p-4"
+        >
+          <h2 class="absolute left-4 top-[-0.75rem] z-10 bg-zinc-950 px-1">
+            Income
+          </h2>
+          <p id="currentBalance" class="text-4xl font-bold text-green-400">
+            ₱0.00
+          </p>
+        </div>
+        <select
+          name=""
+          id=""
+          class="w-min self-center rounded-lg bg-zinc-900 p-4 text-white"
+        >
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+          <option value="yearly">Yearly</option>
+        </select>
       </div>
     </main>
     <script type="module" src="./scripts/index.js"></script>
