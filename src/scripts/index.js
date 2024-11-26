@@ -1,5 +1,5 @@
 // src/scripts/index.js
-import { formatCurrency } from "./utils/helpers.js";
+import { formatCurrency, animateValue } from "./utils/helpers.js";
 
 // Constants for time periods
 const TIME_PERIODS = {
@@ -77,20 +77,25 @@ function calculateTotals(selectedPeriod) {
 }
 
 // Function to update all displays
-function updateDisplays(selectedPeriod) {
+function updateDisplays(selectedPeriod, animate = true) {
   const totals = calculateTotals(selectedPeriod);
 
-  // Update income display
+  // Get elements
   const incomeElement = document.querySelector("#income");
-  incomeElement.textContent = formatCurrency(totals.income);
-
-  // Update expenses display
   const expensesElement = document.querySelector("#expenses");
-  expensesElement.textContent = formatCurrency(totals.expenses);
-
-  // Update balance display
   const balanceElement = document.querySelector("#currentBalance");
-  balanceElement.textContent = formatCurrency(totals.balance);
+
+  if (animate) {
+    // Animate from 0 to target values
+    animateValue(incomeElement, 0, totals.income);
+    animateValue(expensesElement, 0, totals.expenses);
+    animateValue(balanceElement, 0, totals.balance);
+  } else {
+    // Instant update without animation
+    incomeElement.textContent = formatCurrency(totals.income);
+    expensesElement.textContent = formatCurrency(totals.expenses);
+    balanceElement.textContent = formatCurrency(totals.balance);
+  }
 
   // Update balance color based on value
   if (totals.balance < 0) {
@@ -101,7 +106,7 @@ function updateDisplays(selectedPeriod) {
     balanceElement.classList.add("text-green-400");
   }
 
-  // Update description text based on selected period
+  // Update period text
   const periodText = document.querySelector("#period-text");
   if (periodText) {
     let description = "";
@@ -130,16 +135,41 @@ function updateDisplays(selectedPeriod) {
 document.addEventListener("DOMContentLoaded", () => {
   const periodSelect = document.querySelector("#period-select");
 
-  // Set initial period and update displays
-  updateDisplays(periodSelect.value);
+  // Set initial period and update displays with animation
+  updateDisplays(periodSelect.value, true);
 
   // Listen for period changes
   periodSelect.addEventListener("change", (e) => {
-    updateDisplays(e.target.value);
+    // Get current values before update
+    const currentTotals = calculateTotals(e.target.value);
+
+    // Get elements
+    const incomeElement = document.querySelector("#income");
+    const expensesElement = document.querySelector("#expenses");
+    const balanceElement = document.querySelector("#currentBalance");
+
+    // Get current numerical values
+    const currentIncome = parseFloat(
+      incomeElement.textContent.replace(/[^0-9.-]+/g, ""),
+    );
+    const currentExpenses = parseFloat(
+      expensesElement.textContent.replace(/[^0-9.-]+/g, ""),
+    );
+    const currentBalance = parseFloat(
+      balanceElement.textContent.replace(/[^0-9.-]+/g, ""),
+    );
+
+    // Animate from current values to new values
+    animateValue(incomeElement, currentIncome, currentTotals.income);
+    animateValue(expensesElement, currentExpenses, currentTotals.expenses);
+    animateValue(balanceElement, currentBalance, currentTotals.balance);
+
+    // Update other UI elements
+    updateDisplays(e.target.value, false);
   });
 
-  // Listen for storage changes to update displays
+  // Listen for storage changes
   window.addEventListener("storage", () => {
-    updateDisplays(periodSelect.value);
+    updateDisplays(periodSelect.value, true);
   });
 });
