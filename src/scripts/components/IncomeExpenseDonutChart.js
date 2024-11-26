@@ -60,22 +60,33 @@ class IncomeExpenseDistributionChart extends HTMLElement {
       expenses: new Map(),
     };
 
-    // Process transactions by category type
-    categories.forEach((category) => {
-      if (!category.transactions) return;
-
-      const total = category.transactions.reduce((sum, transaction) => {
-        return sum + parseFloat(transaction.amount);
-      }, 0);
-
-      if (total > 0) {
-        if (category.type === "income") {
+    // First process income categories
+    categories
+      .filter((category) => category.type === "income")
+      .forEach((category) => {
+        if (!category.transactions) return;
+        const total = category.transactions.reduce(
+          (sum, transaction) => sum + parseFloat(transaction.amount),
+          0,
+        );
+        if (total > 0) {
           data.income.set(category.name, total);
-        } else {
+        }
+      });
+
+    // Then process expense categories
+    categories
+      .filter((category) => category.type === "expense")
+      .forEach((category) => {
+        if (!category.transactions) return;
+        const total = category.transactions.reduce(
+          (sum, transaction) => sum + parseFloat(transaction.amount),
+          0,
+        );
+        if (total > 0) {
           data.expenses.set(category.name, total);
         }
-      }
-    });
+      });
 
     // Add placeholders if no data
     if (data.income.size === 0) data.income.set("No income", 1);
@@ -85,36 +96,39 @@ class IncomeExpenseDistributionChart extends HTMLElement {
   }
 
   generateColors(type, count) {
-    const incomeColors = [
-      "#4ade80", // green-400
-      "#34d399", // emerald-400
-      "#2dd4bf", // teal-400
-      "#22c55e", // green-500
-      "#10b981", // emerald-500
-      "#14b8a6", // teal-500
-    ];
+    if (type === "income") {
+      const greenColors = [
+        "#4ade80", // green-400
+        "#34d399", // emerald-400
+        "#2dd4bf", // teal-400
+        "#22c55e", // green-500
+        "#10b981", // emerald-500
+      ];
 
-    const expenseColors = [
-      "#f87171", // red-400
-      "#fb923c", // orange-400
-      "#fbbf24", // amber-400
-      "#ef4444", // red-500
-      "#f97316", // orange-500
-      "#f59e0b", // amber-500
-    ];
+      // If we need more colors, generate them in the green spectrum
+      while (greenColors.length < count) {
+        const hue = 120 + ((greenColors.length * 20) % 60); // Stay in green spectrum
+        greenColors.push(`hsl(${hue}, 70%, 60%)`);
+      }
 
-    const baseColors = type === "income" ? incomeColors : expenseColors;
-    const colors = [...baseColors];
+      return greenColors.slice(0, count);
+    } else {
+      const redColors = [
+        "#ef4444", // red-500
+        "#f87171", // red-400
+        "#fb923c", // orange-400
+        "#f97316", // orange-500
+        "#fbbf24", // amber-400
+      ];
 
-    while (colors.length < count) {
-      const hue =
-        type === "income"
-          ? 120 + ((colors.length * 20) % 60) // green hues
-          : 0 + ((colors.length * 20) % 60); // red hues
-      colors.push(`hsl(${hue}, 70%, 60%)`);
+      // If we need more colors, generate them in the red spectrum
+      while (redColors.length < count) {
+        const hue = 0 + ((redColors.length * 20) % 60); // Stay in red spectrum
+        redColors.push(`hsl(${hue}, 70%, 60%)`);
+      }
+
+      return redColors.slice(0, count);
     }
-
-    return colors;
   }
 
   createChart(canvas) {
@@ -125,30 +139,34 @@ class IncomeExpenseDistributionChart extends HTMLElement {
 
     const data = this.processData();
 
-    // Prepare datasets
-    const incomeLabels = Array.from(data.income.keys());
-    const incomeData = Array.from(data.income.values());
+    // Process expenses first, then income
     const expenseLabels = Array.from(data.expenses.keys());
     const expenseData = Array.from(data.expenses.values());
+    const expenseColors = this.generateColors("expense", expenseLabels.length);
 
+    const incomeLabels = Array.from(data.income.keys());
+    const incomeData = Array.from(data.income.values());
     const incomeColors = this.generateColors("income", incomeLabels.length);
-    const expenseColors = this.generateColors("expenses", expenseLabels.length);
 
-    const totalIncome = incomeData.reduce((a, b) => a + b, 0);
+    // Combine data - putting expenses first, then income
+    const combinedLabels = [...expenseLabels, ...incomeLabels];
+    const combinedData = [...expenseData, ...incomeData];
+    const combinedColors = [...expenseColors, ...incomeColors];
+
     const totalExpenses = expenseData.reduce((a, b) => a + b, 0);
+    const totalIncome = incomeData.reduce((a, b) => a + b, 0);
 
-    // Set default text color to white globally
     Chart.defaults.color = "#ffffff";
 
     const ctx = canvas.getContext("2d");
     return new window.Chart(ctx, {
       type: "doughnut",
       data: {
-        labels: [...incomeLabels, ...expenseLabels],
+        labels: combinedLabels,
         datasets: [
           {
-            data: [...incomeData, ...expenseData],
-            backgroundColor: [...incomeColors, ...expenseColors],
+            data: combinedData,
+            backgroundColor: combinedColors,
             borderColor: "rgb(9, 9, 11)", // zinc-950
             borderWidth: 2,
             hoverOffset: 15,
@@ -161,21 +179,21 @@ class IncomeExpenseDistributionChart extends HTMLElement {
         cutout: "60%",
         plugins: {
           legend: {
-            display: true, // Explicitly enable legend
-            position: "right", // Move legend to right side
-            align: "center", // Center align legend items
+            display: true,
+            position: "right",
+            align: "center",
             labels: {
-              boxWidth: 15, // Smaller, more compact boxes
+              boxWidth: 15,
               padding: 15,
-              color: "#ffffff", // Ensure white text
+              color: "#ffffff",
               font: {
                 size: 14,
-                family: "Inter, sans-serif", // Match app font
+                family: "Inter, sans-serif",
               },
-              usePointStyle: true, // Use circular points
-              pointStyle: "circle", // Specifically circular
+              usePointStyle: true,
+              pointStyle: "circle",
               filter: function (legendItem, data) {
-                return data.datasets[0].data[legendItem.index] > 0; // Only show non-zero values
+                return data.datasets[0].data[legendItem.index] > 0;
               },
             },
           },
@@ -188,8 +206,8 @@ class IncomeExpenseDistributionChart extends HTMLElement {
             callbacks: {
               label: function (context) {
                 const value = context.raw;
-                const isIncome = context.dataIndex < incomeLabels.length;
-                const total = isIncome ? totalIncome : totalExpenses;
+                const isExpense = context.dataIndex < expenseLabels.length;
+                const total = isExpense ? totalExpenses : totalIncome;
                 const percentage = ((value / total) * 100).toFixed(1);
                 const formattedValue = new Intl.NumberFormat("en-PH", {
                   style: "currency",
@@ -198,8 +216,8 @@ class IncomeExpenseDistributionChart extends HTMLElement {
                 return `${context.label}: ${formattedValue} (${percentage}%)`;
               },
               afterLabel: function (context) {
-                const isIncome = context.dataIndex < incomeLabels.length;
-                return `Type: ${isIncome ? "Income" : "Expense"}`;
+                const isExpense = context.dataIndex < expenseLabels.length;
+                return `Type: ${isExpense ? "Expense" : "Income"}`;
               },
             },
           },
@@ -207,7 +225,7 @@ class IncomeExpenseDistributionChart extends HTMLElement {
         layout: {
           padding: {
             top: 20,
-            right: 20, // Increased padding for legend
+            right: 20,
             bottom: 20,
             left: 20,
           },
