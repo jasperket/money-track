@@ -29,10 +29,14 @@
     <header>
       <nav
         class="flex flex-wrap items-center justify-center gap-12 py-4 sm:justify-start"
+        aria-label="Main navigation"
       >
         <h1 class="text-4xl font-bold text-green-400">MoneyTrack</h1>
         <div class="flex items-center gap-12">
-          <a href="./index.html" class="transition-all hover:underline"
+          <a
+            href="./index.html"
+            class="transition-all hover:underline"
+            aria-current="page"
             >Dashboard</a
           >
           <a href="./expenses.html" class="hover:underline">Expenses</a>
@@ -78,6 +82,7 @@
           name="period"
           id="period-select"
           class="w-full self-center rounded-lg bg-zinc-900 p-4 text-white sm:w-min"
+          aria-label="Time period"
         >
           <option value="total">Total</option>
           <option value="daily">Daily</option>
