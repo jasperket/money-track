@@ -656,32 +656,12 @@ video {
   display: grid;
 }
 
-.h-80 {
-  height: 20rem;
-}
-
-.h-96 {
-  height: 24rem;
-}
-
-.h-\[calc\(100\%-8rem\)\] {
-  height: calc(100% - 8rem);
-}
-
-.h-72 {
-  height: 18rem;
-}
-
-.h-64 {
-  height: 16rem;
-}
-
-.h-56 {
-  height: 14rem;
-}
-
 .h-48 {
   height: 12rem;
+}
+
+.h-80 {
+  height: 20rem;
 }
 
 .w-full {
@@ -750,14 +730,6 @@ video {
 
 .self-center {
   align-self: center;
-}
-
-.overflow-y-auto {
-  overflow-y: auto;
-}
-
-.overflow-x-hidden {
-  overflow-x: hidden;
 }
 
 .overflow-x-scroll {
@@ -1096,12 +1068,6 @@ dialog[open] {
 
 @media (min-width: 768px) {
   .md\:col-span-6 {
-    grid-column: span 6 / span 6;
-  }
-}
-
-@media (min-width: 1024px) {
-  .lg\:col-span-6 {
     grid-column: span 6 / span 6;
   }
 }

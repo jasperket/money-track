@@ -1,7 +1,7 @@
 import { formatCurrency, animateValue } from "./utils/helpers.js";
 import { renderRecentTransactions } from "./components/ReadOnlyTransactionItem.js";
 import "./components/CashFlowChart.js";
-import "./components/ExpenseDIstributionChart.js";
+import "./components/ExpenseDistributionChart.js";
 import "./components/WeeklySpendingChart.js";
 import "./components/MonthlyComparisonChart.js";
 import "./components/IncomeExpenseDonutChart.js";
