@@ -111,7 +111,46 @@
         class="mt-4 flex flex-col gap-4"
         aria-label="Add new category"
       >
-        <!-- form content remains unchanged -->
+        <div class="flex flex-col gap-2">
+          <label for="name" id="name-label">Category</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="w-full rounded-lg bg-zinc-950 p-2 text-white"
+            aria-required="true"
+            aria-labelledby="name-label"
+            aria-describedby="name-error"
+            required
+          />
+          <div
+            id="name-error"
+            class="error-message"
+            role="alert"
+            aria-live="polite"
+          ></div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="type" id="type-label">Type</label>
+          <select
+            name="type"
+            id="type"
+            class="w-full rounded-lg bg-zinc-950 p-3 text-white"
+            aria-required="true"
+            aria-labelledby="type-label"
+            required
+          >
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+        </div>
+        <button
+          type="submit"
+          class="w-full rounded bg-green-700 p-2 transition-colors hover:bg-green-800"
+          aria-label="Create new category"
+        >
+          Add New Category
+        </button>
       </form>
     </dialog>
 
